@@ -314,6 +314,6 @@ async def api(question: Annotated[str, Form()], file: List[UploadFile] | None = 
 
 
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run("server:app", host="0.0.0.0", port=8080, reload=True)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("server:app", host="0.0.0.0", port=8080, reload=True)
