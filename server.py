@@ -3,7 +3,6 @@ from fastapi import FastAPI, UploadFile, Form, File, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 from typing import Annotated, Dict, Optional, List, Any, Tuple
-# from sentence_transformers import SentenceTransformer
 import tempfile
 import os
 from tools.question_templates import question_templates
@@ -26,6 +25,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def home():
+    return {"message": "API is running!"}
 
 # File to cache embeddings
 EMBEDDINGS_CACHE_FILE = "question_embeddings_cache.pkl"
@@ -310,10 +313,3 @@ async def api(question: Annotated[str, Form()], file: List[UploadFile] | None = 
                 os.rmdir(os.path.join(root, name))
         os.rmdir(temp_dir)
     return {"answer": answer}
-
-
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("server:app", host="0.0.0.0", port=8080, reload=True)
